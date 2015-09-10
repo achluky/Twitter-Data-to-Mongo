@@ -30,32 +30,42 @@ public class MongoDBJDBC {
 		}
 	}
 	
-	public static void main( String args[] ) throws IOException{
-    	String[] paths_file;
+	/*
+	 * Error insert data :
+	 * Jk 07
+	 * Jk 12
+	 * jk 13
+	 * jokowi 12
+	 */
+	public static void main( String args[] ) throws IOException
+	{
+    	String[] paths;
     	String json;
 		DB dba;	
 		BufferedReader buf;
-		File f  				= null;
-		String dir 				= "dataall";
-		f       				= new File("/media/ahmadluky/Data/twitter-stream/"+dir+"/");
-		paths_file   			= f.list();	
-    	dba 					= getDatabases();
-        for	(String path:paths_file){
-    		LOG.info("/media/ahmadluky/Data/twitter-stream/"+dir+"/"+path);
-        	String abs_path 		= "/media/ahmadluky/Data/twitter-stream/"+dir+"/"+path;
+		File f  	= null;
+		String dir 	= "";
+		f   = new File("/media/ahmadluky/Data/twitter-stream/"+dir+"/");
+		paths   = f.list();	
+    	dba = getDatabases();
+        for	(String path:paths)
+        {
+        	String abs_path = "/media/ahmadluky/Data/twitter-stream/"+dir+""+path;
+        	LOG.info(abs_path);
 			try {
 				buf = new BufferedReader(new FileReader(abs_path));
 	            while ((json  = buf.readLine()) != null) {
 	            	LOG.info(json);
-	            	DBObject dbObject 			= (DBObject)JSON.parse(json);
-	            	DBCollection collection 	= dba.getCollection("DocumentDB_"+dir);
+	            	DBObject dbObject = (DBObject)JSON.parse(json);
+	            	DBCollection collection = dba.getCollection("DocumentDB_"+dir);
 	    			/**** Insert ****/
 	    		    LOG.info("create a document to store key and value");
-	    			collection.insert(dbObject);
+		    		collection.insert(dbObject);
 	            }
 			} catch (FileNotFoundException e) {
 				System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			}
+    		
         }
 	}
 }
