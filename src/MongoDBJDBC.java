@@ -31,6 +31,7 @@ public class MongoDBJDBC {
 	}
 	
 	/*
+	 * By : Ahmad Luky Ramdani
 	 * Error insert data :
 	 * Jk 07
 	 * Jk 12
